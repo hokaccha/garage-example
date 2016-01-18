@@ -59,5 +59,18 @@ module GarageClient
     def nested_resource_creation_method?(name)
       !!(name =~ /\Acreate_(.+)\z/ && links.include?($1.to_sym))
     end
+
+    def pretty_print(pp)
+      pp.object_address_group(self) do
+        pp.seplist(@data, proc { pp.text ',' }) do |key, value|
+          pp.breakable ' '
+          pp.group(1) do
+            pp.text key
+            pp.text ': '
+            pp.pp value
+          end
+        end
+      end
+    end
   end
 end

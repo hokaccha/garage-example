@@ -102,6 +102,23 @@ module GarageClient
       super || body.respond_to?(name, *args)
     end
 
+    def pretty_print(pp)
+      pp.object_address_group(self) do
+        pp.breakable ' '
+
+        pp.text "status: "
+        pp.pp response.status
+        pp.comma_breakable
+
+        pp.text "total_count: "
+        pp.pp total_count
+        pp.comma_breakable
+
+        pp.text "body: "
+        pp.pp body
+      end
+    end
+
     private
 
     def method_missing(name, *args, &block)
